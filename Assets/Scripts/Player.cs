@@ -32,8 +32,12 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        score++;
-        ScoreUI.UpdateScore(score);
-        Destroy(collision.gameObject);
+        if (collision.CompareTag("Collectible"))
+        {
+            score++;
+            ScoreUI.UpdateScore(score);
+            Destroy(collision.gameObject);
+        }
+        
     }
 }

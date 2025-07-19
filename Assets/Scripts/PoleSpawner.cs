@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class PoleSpawner : MonoBehaviour
 {
-    public float GapAmount;
     public float PoleSpawnPoint;
-    public SpriteRenderer PolePrefab;
-    public GameObject ScoreTrigger;
+    public GameObject[] PolePrefab;
     public float GapMinHeight;
     public float GapMaxHeight;
     public float GapTime;
@@ -21,17 +19,10 @@ public class PoleSpawner : MonoBehaviour
         while (true)
         {
             float heightPoint = Random.Range(GapMinHeight, GapMaxHeight);
+            
+            int poleType = Random.Range(0, PolePrefab.Length);
 
-            float topPoleHeightPos = heightPoint + (GapAmount / 2) + (PolePrefab.bounds.size.y / 2);
-            float botPoleHeightPos = heightPoint - (GapAmount / 2) - (PolePrefab.bounds.size.y / 2);
-
-            Vector3 topPoleSpawnPoint = new Vector3(PoleSpawnPoint, topPoleHeightPos, 0);
-            Vector3 botPoleSpawnPoint = new Vector3(PoleSpawnPoint, botPoleHeightPos, 0);
-
-            SpriteRenderer poleTop = Instantiate(PolePrefab, topPoleSpawnPoint, Quaternion.identity);
-            SpriteRenderer poleBot = Instantiate(PolePrefab, botPoleSpawnPoint, Quaternion.identity);
-
-            Instantiate(ScoreTrigger, new Vector3(PoleSpawnPoint, heightPoint, 0), Quaternion.identity);
+            Instantiate(PolePrefab[poleType], new Vector3(PoleSpawnPoint, heightPoint,0) , Quaternion.identity);
 
             yield return new WaitForSeconds(GapTime);
         }
